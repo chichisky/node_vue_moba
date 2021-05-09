@@ -8,7 +8,7 @@
         <template slot-scope="scope">
           <el-button
             type="primary"
-            @click="$router.push(`/admin_user/edit/${scope.row._id}`)"
+            @click="$router.push(`/admin_users/edit/${scope.row._id}`)"
             size="small"
             >编辑</el-button
           >
@@ -34,7 +34,7 @@ export default {
   methods: {
     // 获得初始化数据
     async fetch() {
-      const res = await this.$http.get("rest/admin_user");
+      const res = await this.$http.get("rest/admin_users");
       this.items = res.data;
     },
     // 删除操作
@@ -45,7 +45,7 @@ export default {
         type: "warning",
       })
         .then(async () => {
-          await this.$http.delete(`rest/admin_user/${row._id}`);
+          await this.$http.delete(`rest/admin_users/${row._id}`);
           this.fetch();
           this.$message({
             type: "success",

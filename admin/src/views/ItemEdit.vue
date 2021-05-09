@@ -9,6 +9,7 @@
         <el-upload
           class="avatar-uploader"
           :action="$http.defaults.baseURL + '/upload'"
+          :headers = "headers"
           :show-file-list="false"
           :on-success="res => $set(model, 'icon', res.url)"
         >
@@ -32,6 +33,9 @@ export default {
     return {
       model: {},
       isId: true,
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`
+      }
     };
   },
   methods: {

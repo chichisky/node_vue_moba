@@ -61,7 +61,7 @@ export default {
       let res = await this.$http.get(`rest/articles/${this.id}`);
       this.model = res.data;
     },
-    // 初始化数据，获取上级分类数据
+    // 初始化数据，获取分类数据
     async feachCategories() {
       let res = await this.$http.get(`rest/categories`);
       this.categories = res.data;

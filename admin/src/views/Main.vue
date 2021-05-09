@@ -1,7 +1,7 @@
 <template>
   <el-container style="height: 100vh">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-menu router :default-openeds="['3']" unique-opened :default-active="$route.path">
+      <el-menu router unique-opened :default-active="$route.path">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-menu"></i>内容管理</template>
           <!-- 物品 -->
@@ -43,8 +43,8 @@
           <!-- 管理员 -->
            <el-menu-item-group>
             <template slot="title">管理员</template>
-            <el-menu-item index="/admin_user/edit">新建管理员</el-menu-item>
-            <el-menu-item index="/admin_user/list">管理员列表</el-menu-item>
+            <el-menu-item index="/admin_users/edit">新建管理员</el-menu-item>
+            <el-menu-item index="/admin_users/list">管理员列表</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -56,12 +56,10 @@
         <el-dropdown>
           <i class="el-icon-setting" style="margin-right: 15px"></i>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
+            <el-dropdown-item @click.native="exit">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span>王小虎</span>
+        <span>admin</span>
       </el-header>
 
       <el-main>
@@ -74,15 +72,34 @@
 <script>
 export default {
   data() {
-    const item = {
-      date: "2016-05-02",
-      name: "王小虎",
-      address: "上海市普陀区金沙江路 1518 弄",
-    };
     return {
-      tableData: Array(20).fill(item),
+      model: {}
     };
   },
+  methods: {
+    // 退出设置
+    exit () {
+      this.$confirm(`确定要退出吗？`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(async () => {
+          this.$set(localStorage, 'token', '');
+          this.$message({
+            type: "success",
+            message: "退出成功!",
+          });
+          this.$router.push('/login')
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消退出",
+          });
+        });
+    }
+  }
 };
 </script>
 

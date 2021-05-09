@@ -5,6 +5,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/login',
+    component: () => import('../views/Login.vue'),
+    meta: { isPublic: true }
+  },
+  {
     path: '/',
     name: 'main',
     component: () => import('../views/Main.vue'),
@@ -30,9 +35,9 @@ const routes = [
       { path: '/ads/edit/:id', component: () => import('../views/AdCreate.vue'), props: true },
       { path: '/ads/list', component: () => import('../views/AdList.vue') },
       // 管理员页面
-      { path: '/admin_user/edit', component: () => import('../views/AdminUserCreate.vue') },
-      { path: '/admin_user/edit/:id', component: () => import('../views/AdminUserCreate.vue'), props: true },
-      { path: '/admin_user/list', component: () => import('../views/AdminUserList.vue') }
+      { path: '/admin_users/edit', component: () => import('../views/AdminUserCreate.vue') },
+      { path: '/admin_users/edit/:id', component: () => import('../views/AdminUserCreate.vue'), props: true },
+      { path: '/admin_users/list', component: () => import('../views/AdminUserList.vue') }
     ]
   }
 ]
@@ -40,4 +45,11 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  //to and from are Route Object,next() must be called to resolve the hook
+  if (!to.meta.isPublic && !localStorage.token) {
+    router.push('/login')
+  }
+  next()
+})
 export default router

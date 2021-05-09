@@ -6,7 +6,7 @@
         <el-input v-model="model.username"></el-input>
       </el-form-item>
       <el-form-item label="密码" >
-        <el-input type="text" v-model="model.password"></el-input>
+        <el-input v-model="model.password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       model: {},
-      parents: [],
       isId: true
     };
   },
@@ -31,11 +30,11 @@ export default {
     // 保存数据，如果修改则put,如果新建则post 
     async save() {
       if (this.id) {
-        await this.$http.put(`rest/admin_user/${this.id}`, this.model);
+        await this.$http.put(`rest/admin_users/${this.id}`, this.model);
       } else {
-        await this.$http.post("rest/admin_user", this.model);
+        await this.$http.post("rest/admin_users", this.model);
       }
-      this.$router.push("/admin_user/list");
+      this.$router.push("/admin_users/list");
       this.$message({
         type: "success",
         message: "保存成功",
@@ -43,7 +42,7 @@ export default {
     },
     // 初始化数据
     async feach() {
-      let res = await this.$http.get(`rest/admin_user/${this.id}`);
+      let res = await this.$http.get(`rest/admin_users/${this.id}`);
       this.model = res.data;
     },
     isModel() {
