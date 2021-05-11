@@ -1,0 +1,10 @@
+@import url(./normalize.css);
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+input, textarea {
+  outline: none;
+}
