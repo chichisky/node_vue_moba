@@ -39,7 +39,6 @@ export default {
     return {
       model: {},
       categories: [],
-      isId: true,
     };
   },
   methods: {
@@ -78,17 +77,10 @@ export default {
       Editor.insertEmbed(cursorLocation, "image", res.data.url);
       resetUploader();
     },
-    isModel() {
-      this.isId ? this.model = {} : 1;
-      this.isId = false;
-    },
   },
   created() {
     this.feachCategories();
     this.id && this.feach();
-  },
-  beforeUpdate() {
-     this.id ? 1 : this.isModel();
   },
 };
 </script>

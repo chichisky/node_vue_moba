@@ -8,6 +8,7 @@ app.use(require('cors')())
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 require('./routes/admin')(app)
+require('./routes/web')(app)
 require('./plugins/db')(app)
 
 

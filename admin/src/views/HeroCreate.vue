@@ -23,6 +23,18 @@
               <i v-else class="el-icon-plus avatar-uploader-icon" style="line-height: 5rem"></i>
             </el-upload>
           </el-form-item>
+          <el-form-item label="Banner">
+            <el-upload
+              class="avatar-uploader"
+              :action="$http.defaults.baseURL + '/upload'"
+              :headers = "headers"
+              :show-file-list="false"
+              :on-success=" res => $set(model, 'banner', res.url)"
+            >
+              <img v-if="model.banner" :src="model.banner" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon" style="line-height: 5rem"></i>
+            </el-upload>
+          </el-form-item>
           <el-form-item label="类别">
             <el-select v-model="model.categories" multiple>
               <el-option
@@ -67,7 +79,7 @@
             ></el-rate>
           </el-form-item>
           <el-form-item label="顺风出装">
-            <el-select v-model="model.items1" multiple>
+            <el-select filterable v-model="model.items1" multiple>
               <el-option
                 v-for="item of items"
                 :key="item._id"
@@ -78,7 +90,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="逆风出装">
-            <el-select v-model="model.items2" multiple>
+            <el-select filterable v-model="model.items2" multiple>
               <el-option
                 v-for="item of items"
                 :key="item._id"
@@ -120,6 +132,9 @@
                   <i v-else class="el-icon-plus avatar-uploader-icon" style="line-height: 5rem"></i>
                 </el-upload>
               </el-form-item>
+              <el-form-item label="CD">
+                <el-input type="textarea" v-model="item.cd"></el-input>
+              </el-form-item>
               <el-form-item label="描述">
                 <el-input type="textarea" :rows="5" v-model="item.description"></el-input>
               </el-form-item>
@@ -128,6 +143,33 @@
               </el-form-item>
               <el-form-item>
                 <el-button type="danger" size="small" @click="model.skills.splice(i, 1)">删除</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
+        <!-- 最佳搭档 -->
+        <el-tab-pane label="最佳搭档" name="partners">
+          <el-button size="small" @click="model.partners.push({})"
+            ><i class="el-icon-plus"></i>添加英雄</el-button
+          >
+          <el-row type="flex" style="flex-wrap: wrap">
+            <el-col :md="12" v-for="(item, i) in model.partners" :key="i">
+              <el-form-item label="添加英雄">
+                <el-select filterable v-model="item.hero">
+                    <el-option
+                      v-for="hero of heroes"
+                      :key="hero._id"
+                      :label="hero.name"
+                      :value="hero._id"
+                    >
+                    </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="描述">
+                <el-input type="textarea" :rows="5" v-model="item.description"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="danger" size="small" @click="model.partners.splice(i, 1)">删除</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -156,13 +198,14 @@ export default {
           diffcult: 0,
         },
         skills: [],
+        partners: []
       },
-      isId: true,
       categories: [],
       items: [],
       headers: {
         Authorization: `Bearer ${localStorage.token}`
-      }
+      },
+      heroes: []
     };
   },
   methods: {
@@ -195,28 +238,17 @@ export default {
       let res = await this.$http.get(`rest/items`);
       this.items = res.data;
     },
-    // 刷新，将数据重置
-    isModel() {
-      this.isId
-        ? (this.model = {
-            name: "",
-            avator: "",
-            scores: {
-              diffcult: 0,
-            },
-            skills: [],
-          })
-        : 1;
-      this.isId = false;
-    },
+    // 获得英雄数据 
+    async fetchHeroes(){
+      const res = await this.$http.get('rest/heroes');
+      this.heroes = res.data;
+    }
   },
   created() {
     this.id && this.feach();
     this.feachCategories();
     this.feachItems();
-  },
-  beforeUpdate() {
-    this.id ? 1 : this.isModel();
+    this.fetchHeroes();
   },
 };
 </script>

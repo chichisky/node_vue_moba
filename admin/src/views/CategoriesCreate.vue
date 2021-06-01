@@ -32,7 +32,6 @@ export default {
     return {
       model: {},
       parents: [],
-      isId: true
     };
   },
   methods: {
@@ -59,17 +58,10 @@ export default {
       let res = await this.$http.get(`rest/categories`);
       this.parents = res.data;
     },
-    isModel() {
-      this.isId ? this.model = {} : 1;
-      this.isId = false;
-    },
   },
   created() {
     this.feachParents();
     this.id && this.feach();
-  },
-  beforeUpdate() {
-    this.id ? 1 : this.isModel();
   },
 };
 </script>

@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       model: {},
-      isId: true,
       headers: {
         Authorization: `Bearer ${localStorage.token}`
       }
@@ -58,17 +57,10 @@ export default {
       let res = await this.$http.get(`rest/items/${this.id}`);
       this.model = res.data;
     },
-    isModel() {
-      this.isId ? this.model = {} : 1;
-      this.isId = false;
-    },
   },
   created() {
     this.id && this.feach();
   },
-  beforeUpdate () {
-    this.id ? 1 : this.isModel();
-  }
 };
 </script>
 

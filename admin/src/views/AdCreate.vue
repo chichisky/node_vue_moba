@@ -56,7 +56,6 @@ export default {
         name: "",
         items: [],
       },
-      isId: true,
       headers: {
         Authorization: `Bearer ${localStorage.token}`
       }
@@ -82,21 +81,9 @@ export default {
       this.model = Object.assign({}, this.model, res.data);
       // console.log(this.model);
     },
-    isModel() {
-      this.isId
-        ? (this.model = {
-            name: "",
-            items: [],
-          })
-        : 1;
-      this.isId = false;
-    },
   },
   created() {
     this.id && this.feach();
-  },
-  beforeUpdate() {
-    this.id ? 1 : this.isModel();
   },
 };
 </script>

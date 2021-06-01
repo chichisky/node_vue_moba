@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       model: {},
-      isId: true
     };
   },
   methods: {
@@ -45,16 +44,9 @@ export default {
       let res = await this.$http.get(`rest/admin_users/${this.id}`);
       this.model = res.data;
     },
-    isModel() {
-      this.isId ? this.model = {} : 1;
-      this.isId = false;
-    },
   },
   created() {
     this.id && this.feach();
-  },
-  beforeUpdate() {
-    this.id ? 1 : this.isModel();
   },
 };
 </script>

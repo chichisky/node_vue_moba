@@ -6,6 +6,8 @@ const Schema = new mongoose.Schema({
   avatar: {type: String},
   // 称号
   title: {type: String},
+  // banner
+  banner: {type: String},
   // 类别
   categories: [{type: mongoose.SchemaTypes.ObjectId, ref: 'Category'}],
   // 分数
@@ -21,6 +23,7 @@ const Schema = new mongoose.Schema({
   skills: [{
     icon: {type: String},
     name: {type: String},
+    cd: {type: String},
     description: {type: String},
     tips: {type: String},
   }],
@@ -43,4 +46,4 @@ const Schema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('Hero', Schema);
+module.exports = mongoose.model('Hero', Schema, 'heroes');

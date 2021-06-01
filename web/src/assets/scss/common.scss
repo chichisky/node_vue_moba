@@ -1,0 +1,183 @@
+@import url("../css/base.css");
+@import url("http://at.alicdn.com/t/font_2544177_bauq404jbio.css");
+@import "./variables";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  // padding: 0;
+}
+
+html {
+  font-size: 13px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.2rem;
+  background-color: #f1f1f1;
+}
+
+a {
+  color: #999;
+}
+
+p {
+  line-height: 1.5em;
+}
+
+/** text-colors  bgc*/
+@each $colorKey, $color in $colors {
+  .text-#{$colorKey} {
+    color: $color;
+  }
+
+  .bgc-#{$colorKey} {
+    background-color: $color;
+  }
+}
+
+/* text-align */
+@each $var in (left, center, right) {
+  .text-#{$var} {
+    text-align: $var;
+  }
+}
+
+@each $sizeKey, $size in $font-sizes {
+  .fs-#{$sizeKey} {
+    font-size: $size * $base-font-size;
+  }
+}
+
+// width   height
+.w-100 {
+  width: 100%;
+}
+.h-100 {
+  height: 100%;
+}
+
+/* flex */
+.d-flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+@each $key, $value in $flex-jc {
+  .jc-#{$key} {
+    justify-content: $value;
+  }
+}
+
+@each $key, $value in $flex-ai {
+  .ai-#{$key} {
+    align-items: $value;
+  }
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+@each $typeKey, $type in $spacing-types {
+  @each $sizeKey, $size in $spacing-sizes {
+    // m-1
+    .#{$typeKey}-#{$sizeKey} {
+      #{$type}: $size * $spacing-base-size;
+    }
+    // mx-1
+    .#{$typeKey}x-#{$sizeKey} {
+      #{$type}-left: $size * $spacing-base-size;
+      #{$type}-right: $size * $spacing-base-size;
+    }
+    // my-1
+    .#{$typeKey}y-#{$sizeKey} {
+      #{$type}-top: $size * $spacing-base-size;
+      #{$type}-bottom: $size * $spacing-base-size;
+    }
+  }
+  // mt-1
+  @each $directionKey, $direction in $spacing-directions {
+    @each $sizeKey, $size in $spacing-sizes {
+      .#{$typeKey}#{$directionKey}-#{$sizeKey} {
+        #{$type}-#{$direction}: $size * $spacing-base-size;
+      }
+    }
+  }
+}
+
+// button
+.btn {
+  border: none;
+  border-radius: 0.1538rem;
+  -webkit-border-radius: 0.1538rem;
+  -moz-border-radius: 0.1538rem;
+  -ms-border-radius: 0.1538rem;
+  -o-border-radius: 0.1538rem;
+  font-size: map-get($map: $font-sizes, $key: "sm") * $base-font-size;
+  // margin: 0.4rem 0;
+  height: 1.8rem;
+  padding: 0.2rem, 0.5rem;
+}
+
+// nav
+.nav {
+  display: flex;
+  .nav-item {
+    border-bottom: 0.2308rem solid transparent;
+    // 普通
+    &.active {
+      color: map-get($map: $colors, $key: 'primary');
+      border-bottom-color: map-get($map: $colors, $key: 'primary');
+    }
+  }
+  &.nav-inverse {
+    .nav-item {
+      color: map-get($map: $colors, $key: 'white');
+      &.active {
+        border-bottom-color: map-get($map: $colors, $key: 'white');
+      }
+    }
+  }
+}
+
+// sprite
+.sprite {
+  background: url("../img/sprite/index.png") no-repeat 0 0;
+  background-size: 28.8462rem;
+  display: inline-block;
+
+  &.sprite-news {
+    width: 1.7692rem;
+    height: 1.5385rem;
+    background-position: 63.546% 15.517%;
+  }
+  &.sprite-story {
+    width: 1.7692rem;
+    height: 1.5385rem;
+    background-position: 90.483% 15.614%;
+  }
+  &.sprite-arrow {
+    width: 0.7692rem;
+    height: 0.7692rem;
+    background-position: 38.577% 52.076%;
+  }
+}
+
+// text overflow
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
